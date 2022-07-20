@@ -4,6 +4,7 @@ local StarterGui = game:GetService("StarterGui")
 
 local interval = 0
 local bombInterval = 0
+local gateInterval = 0
 local grindCoinsInterval = 0
 
 local spamForward = false
@@ -18,6 +19,7 @@ local spamJump = false
 local spamRocket = false
 local spamSpawn = false
 local spamBombs = false
+local spamGates = false
 local grindCoins = false
 local includeGamePass = false
 
@@ -41,6 +43,7 @@ local window, gui = library:AddWindow("cart ride around used car battery hax by 
 
 local Carts = window:AddTab("Carts")
 local BombCarts = window:AddTab("Bomb Carts")
+local Gates = window:AddTab("Gates")
 local Misc = window:AddTab("Misc")
 
 function forwardAllCarts()
@@ -229,6 +232,19 @@ function getAllCoins()
 	end
 end
 
+function toggleAllGates()
+	for i, v in pairs(workspace:GetChildren()) do
+		pcall(function()
+			if v.Name:match("crossing") then
+				if v:FindFirstChild("Button") then
+				    firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 1)
+				    firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 0)
+				end
+			end
+		end)
+	end
+end
+
 Carts:AddButton("Forward All Carts", forwardAllCarts)
 
 Carts:AddSwitch("Spam Forward All Carts", function(t)
@@ -331,8 +347,24 @@ spawn(function()
     while wait(bombInterval) do
         if spamMove then moveAllCarts() end
         if spamExplode then explodeAllCarts() end
-		if spamBombs then spawnBombCarts() end
+	if spamBombs then spawnBombCarts() end
     end
+end)
+
+Gates:AddButton("Toggle All Gates", toggleAllGates)
+
+Gates:AddSwitch("Spam Toggle All Gates", function(t)
+	spamGates = t
+end)
+
+Gates:AddSlider("Spam Interval", function(v)
+	gateInterval = v
+end)
+
+spawn(function()
+	while wait(gateInterval) do
+		if spamGates then toggleAllGates() end
+	end
 end)
 
 Misc:AddButton("Get All Tools", function()
