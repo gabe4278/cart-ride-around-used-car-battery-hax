@@ -148,11 +148,10 @@ function spawnAllCarts()
 	for i, v in pairs(workspace:GetChildren()) do
 		pcall(function()
 			if v.Name:match("respawner") then
-				if includeGamePass and (v.Name == "superiorrespawner" or v.Name == "DREAMrespawner") then
-					if v:FindFirstChild("respawn") then
-						firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
-						firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
-					end
+				if not (includeGamePass and (v.Name == "superiorrespawner" or v.Name == "DREAMrespawner")) then continue end
+				if v:FindFirstChild("respawn") then
+					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
+					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
 				end
 			end
 		end)
