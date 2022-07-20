@@ -19,6 +19,7 @@ local spamRocket = false
 local spamSpawn = false
 local spamBombs = false
 local grindCoins = false
+local includeGamePass = false
 
 if not fireclickdetector then
 	StarterGui:SetCore("SendNotification", {
@@ -147,9 +148,11 @@ function spawnAllCarts()
 	for i, v in pairs(workspace:GetChildren()) do
 		pcall(function()
 			if v.Name:match("respawner") then
-				if v:FindFirstChild("respawn") then
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
+				if includeGamePass and (v.Name == "superiorrespawner" or v.Name == "DREAMrespawner") then
+					if v:FindFirstChild("respawn") then
+						firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
+						firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
+					end
 				end
 			end
 		end)
@@ -279,6 +282,10 @@ Carts:AddButton("Spawn All Carts", spawnAllCarts)
 
 Carts:AddSwitch("Spam Spawn All Carts", function(t)
 	spamSpawn = t
+end)
+
+Carts:AddSwitch("Include Game Pass Carts", function(t)
+	includeGamePass = t
 end)
 
 Carts:AddSlider("Spam Interval", function(v)
