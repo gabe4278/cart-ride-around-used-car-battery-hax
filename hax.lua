@@ -314,7 +314,7 @@ spawn(function()
 		if spamStop then stopAllCarts() end
 		if spamLight then lightAllCarts() end
 		if spamFire then fireAllCarts() end
-		if spamWheel then jumpAllCarts() end
+		if spamWheel then wheelAllCarts() end
 		if spamJump then jumpAllCarts() end
 		if spamRocket then rocketAllCarts() end
 		if spamSpawn then spawnAllCarts() end
