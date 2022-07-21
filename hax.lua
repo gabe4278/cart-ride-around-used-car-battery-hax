@@ -5,7 +5,6 @@ local StarterGui = game:GetService("StarterGui")
 local interval = 0
 local bombInterval = 0
 local gateInterval = 0
-local grindCoinsInterval = 0
 
 local spamForward = false
 local spamBackward = false
@@ -23,20 +22,13 @@ local spamGates = false
 local grindCoins = false
 local includeGamePass = false
 
-if not fireclickdetector then
+if not fireclickdetector or not firetouchinterest then
 	StarterGui:SetCore("SendNotification", {
 		Title = "Notice",
-		Text = "Your exploit does not have 'fireclickdetector'.",
+		Text = "Your executor is unsupported.",
 		Duration = 5
 	})
-end
-
-if not firetouchinterest then
-	StarterGui:SetCore("SendNotification", {
-		Title = "Notice",
-		Text = "Your exploit does not have 'firetouchinterest'.",
-		Duration = 5
-	})
+    return
 end
 
 local window = library:AddWindow("cart ride around used car battery hax by Gabry#6899 and Ball#7062")
@@ -46,202 +38,98 @@ local BombCarts = window:AddTab("Bomb Carts")
 local Gates = window:AddTab("Gates")
 local Misc = window:AddTab("Misc")
 
-function forwardAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("forward") then fireclickdetector(v.forward.ClickDetector) end
-			end
-		end)
+function xAllCarts(name)
+    for i, v in pairs(workspace:GetChildren()) do
+        if v.Name == 'Cart' then
+            if v:FindFirstChild(name) then fireclickdetector(v[name].ClickDetector) end
+        end
 	end
+end
+
+function forwardAllCarts()
+	xAllCarts('forward')
 end
 
 function backwardAllCarts()
-		for i, v in pairs(workspace:GetChildren()) do
-			pcall(function()
-				if v.Name:match("Cart") then
-					if v:FindFirstChild("backward") then fireclickdetector(v.backward.ClickDetector) end
-				end
-			end)
-		end
+	xAllCarts('backward')
 end
 
 function stopAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("stop") then fireclickdetector(v.stop.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('stop')
 end
 
 function lightAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("lightbutton") then fireclickdetector(v.lightbutton.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('lightbutton')
 end
 
 function moveAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				local move = v:FindFirstChild("move")
-				if move then fireclickdetector(move.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('move')
 end 
 
 function explodeAllCarts()
-    for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("explode") then fireclickdetector(v.explode.ClickDetector) end
-			end
-		end)
-	end
+    xAllCarts('explode')
 end
 
 function fireAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("firebutton") then fireclickdetector(v.firebutton.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('firebutton')
 end
 
 function wheelAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("wheelbutton") then fireclickdetector(v.wheelbutton.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('wheelbutton')
 end
 
 function jumpAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("jumpbutton") then fireclickdetector(v.jumpbutton.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('jumpbutton')
 end
 
 function rocketAllCarts()
-	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("Cart") then
-				if v:FindFirstChild("rocketbutton") then fireclickdetector(v.rocketbutton.ClickDetector) end
-			end
-		end)
-	end
+	xAllCarts('rocketbutton')
 end
 
 function spawnAllCarts()
 	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("respawner") then
-				if not includeGamePass and (v.Name == "superiorrespawner" or v.Name == "DREAMrespawner") then return end
-				if v:FindFirstChild("respawn") then
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
-				end
-			end
-		end)
+        if v.Name:match("respawner") then
+            if not includeGamePass and (v.Name == "superiorrespawner" or v.Name == "DREAMrespawner") then return end
+            if v:FindFirstChild("respawn") then
+                firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
+                firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
+            end
+        end
 	end
 end
 
 function spawnBombCarts()
 for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("bombrespawnerply") then
-				if v:FindFirstChild("respawn") then
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
-					firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
-				end
-			end
-		end)
+        if v.Name:match("bombrespawnerply") then
+            if v:FindFirstChild("respawn") then
+                firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 1)
+                firetouchinterest(Players.LocalPlayer.Character.PrimaryPart, v.respawn, 0)
+            end
+        end
 	end
 end
 
 function getAllCoins()
-	pcall(function(Lol)
-		yes = game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").coinspawner.tricoins["Tri-PlayCoin"].Handle.CFrame
-		wait(1)
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").coinspawner.easycoins.PlayCoin.Handle.CFrame
-		wait(1)
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").coinspawner.mediumcoins.PlayCoin.Handle.CFrame
-		wait(1)
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = game:GetService("Workspace").coinspawner.hardcoins.PlayCoin.Handle.CFrame
-		game:GetService("Players").LocalPlayer.Character.HumanoidRootPart.CFrame = yes
-		for _, v in pairs(game.Players.LocalPlayer.Backpack:GetChildren()) do
-	v.Parent = game.Players.LocalPlayer.Character
-	v:Activate()
-	end
-	end)
-	wait(3)
-	function b11()
-				--fatfatfat
-				bv11 = b11
-				spawn(function()
-					while bv11 == true do wait()
-						pcall(function()
-							if game:GetService("Workspace")[game.Players.LocalPlayer.Name] then
-								wait(.0)
-						for i,v in pairs(game:GetService("Workspace")[game.Players.LocalPlayer.Name]:GetDescendants()) do
-							if v.Name == "Config" then
-						a = require(v)
-						a.ReloadTime = 0
-							end
-						end
-					end
-					end)
-					end
-				end)
-				end
-
-	if game.Players.LocalPlayer.Character.Humanoid.RigType == "R15" then
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R6" else
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R15"
-	end
-	game:GetService('StarterGui'):SetCore('ResetButtonCallback',true)
-	game.Players.LocalPlayer.Character:BreakJoints()
-	game.Players.LocalPlayer.Character.Humanoid.Health = 0
-	repeat 
-	if game.Players.LocalPlayer.Character.Humanoid.RigType == "R15" then
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R6" else
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R15"
-	end
-
-	until wait(0.0000001)
-
-	if game.Players.LocalPlayer.Character.Humanoid.RigType == "R15" then
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R6" else
-	game.Players.LocalPlayer.Character.Humanoid.RigType = "R15"
-	end
+    local startcf = Players.LocalPlayer.Character.HumanoidRootPart.CFrame
+	for i,v in pairs(game.Workspace.coinspawner:GetDescendants()) do
+        if v:IsA('BasePart') then
+            repeat
+                Players.LocalPlayer.Character:SetPrimaryPartCFrame(v.CFrame)
+                wait(0.1)
+            until v.AncestryChanged:Wait()
+        end
+    end
+    Players.LocalPlayer.Character:SetPrimaryPartCFrame(startcf)
 end
 
 function toggleAllGates()
 	for i, v in pairs(workspace:GetChildren()) do
-		pcall(function()
-			if v.Name:match("crossing") then
-				if v:FindFirstChild("Button") then
-				    firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 1)
-				    firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 0)
-				end
-			end
-		end)
+        if v.Name:match("crossing") then
+            if v:FindFirstChild("Button") then
+                firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 1)
+                firetouchinterest(Players.LocalPlayer.Character.HumanoidRootPart, v.Button, 0)
+            end
+        end
 	end
 end
 
@@ -307,8 +195,8 @@ Carts:AddSlider("Spam Interval", function(v)
 	interval = v
 end, {min = 0, max = 10})
 
-spawn(function()
-	while wait(interval) do
+task.spawn(function()
+	while task.wait(interval) do
 		if spamForward then forwardAllCarts() end
 		if spamBackward then backwardAllCarts() end
 		if spamStop then stopAllCarts() end
@@ -343,8 +231,8 @@ BombCarts:AddSlider("Spam Interval", function(v)
     bombInterval = v
 end, {min = 0, max = 10})
 
-spawn(function()
-    while wait(bombInterval) do
+task.spawn(function()
+    while task.wait(bombInterval) do
         if spamMove then moveAllCarts() end
         if spamExplode then explodeAllCarts() end
 	if spamBombs then spawnBombCarts() end
@@ -361,14 +249,21 @@ Gates:AddSlider("Spam Interval", function(v)
 	gateInterval = v
 end)
 
-spawn(function()
-	while wait(gateInterval) do
+task.spawn(function()
+	while task.wait(gateInterval) do
 		if spamGates then toggleAllGates() end
 	end
 end)
 
 Misc:AddButton("Get All Tools", function()
-	if Players.LocalPlayer.Character then Players.LocalPlayer.Character:SetPrimaryPartCFrame(CFrame.new(-619.2999877929688, 159.5179443359375, 699.6990966796875)) end
+    local chr = Players.LocalPlayer.Character
+	if chr then 
+        chr:SetPrimaryPartCFrame(CFrame.new(-619.2999877929688, 159.5179443359375, 699.6990966796875)) 
+        wait(0.2)
+        chr:SetPrimaryPartCFrame(game.Workspace.printer.CFrame)
+        wait(0.2)
+        chr:SetPrimaryPartCFrame(game.Workspace.unprinter.CFrame)
+    end
 end)
 
 Misc:AddButton("Teleport to Spawn", function()
@@ -382,15 +277,15 @@ end)
 Misc:AddButton("Get All Coins", getAllCoins)
 
 Misc:AddSwitch("Grind All Coins", function(t)
+    getAllCoins()
 	grindCoins = t
 end)
 
-Misc:AddSlider("Grind Coins Interval", function(v)
-	grindCoinsInterval = v
-end, {min = 0, max = 10})
-
-spawn(function()
-	while wait(grindCoinsInterval) do
-		if grindCoins then getAllCoins() end
-	end
+game.Workspace.coinspawner.DescendantAdded:Connect(function()
+    if grindCoins then
+        repeat
+            wait()
+        until Players.LocalPlayer.Character
+        getAllCoins()
+    end
 end)
