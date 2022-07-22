@@ -5,5 +5,5 @@ An exploit GUI from the game [cart ride around used car battery](https://www.rob
 
 # Script
 ```lua
-loadstring(game:HttpGet("https://raw.githubusercontent.com/gabe4278/cart-ride-around-used-car-battery-hax/main/hax.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/robodmanx/cart-ride-around-used-car-battery-hax-improved/main/hax.lua"))()
 ```
