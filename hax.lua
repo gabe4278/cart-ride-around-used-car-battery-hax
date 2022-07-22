@@ -41,7 +41,9 @@ local Misc = window:AddTab("Misc")
 function xAllCarts(name)
     for i, v in pairs(workspace:GetChildren()) do
         if v.Name:sub(-4,-1) == 'Cart' then
-            if v:FindFirstChild(name) then fireclickdetector(v[name].ClickDetector) end
+            if v:FindFirstChild(name) then 
+                pcall(function() fireclickdetector(v[name].ClickDetector) end)
+            end
         end
 	end
 end
