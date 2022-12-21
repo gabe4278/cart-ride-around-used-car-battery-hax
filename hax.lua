@@ -39,7 +39,7 @@ if not firetouchinterest then
 	})
 end
 
-local window = library:AddWindow("cart ride around used car battery hax by Gabry#6899 and Ball#7062")
+local window = library:AddWindow("cart ride around used car battery hax by Gabry#6899 and spigmaa#7062")
 
 local Carts = window:AddTab("Carts")
 local BombCarts = window:AddTab("Bomb Carts")
